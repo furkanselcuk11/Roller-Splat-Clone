@@ -7,7 +7,7 @@ public class gameManager : MonoBehaviour
 {
     public static gameManager instance;
 
-    private groundPiece[] allGroundPiece;
+    private groundPiece[] allGroundPiece;   // Leveldeki tüm zeminlerin tutulduðu dizi
     private void Awake()
     {
         if (instance == null)
@@ -22,11 +22,12 @@ public class gameManager : MonoBehaviour
     }
     void Start()
     {
-        SetupNewLevel();
+        SetupNewLevel();    // Oyun baþladýðýnda leveldeki tüm zeminlerin sayýsýný (toplam zemin) "allGroundPiece" dizisiene aktarýr
     }
     private void SetupNewLevel()
     {
-        allGroundPiece = FindObjectsOfType<groundPiece>();  // "grounPiece"  Scripti olan tüm objeler aranýr
+        allGroundPiece = FindObjectsOfType<groundPiece>();  
+        // "grounPiece"  Scripti olan tüm objeler aranýr ve "allGroundPiece" dizisine eklenir - Temas edilecek zemin sayýsý belirlenir
     }
     private void OnEnable()
     {
@@ -38,18 +39,18 @@ public class gameManager : MonoBehaviour
     }
     public void ChechComplete()
     {
-        bool isFinished = true;
-        for (int i = 0; i < allGroundPiece.Length; i++) // allGroundPiece içerisindeki tüm objeleri döndür
+        bool isFinished = true; // Tüm zeminin temasý gerçekleþmiþtir
+        for (int i = 0; i < allGroundPiece.Length; i++) // "allGroundPiece" içerisindeki tüm nesneleri döndür
         {
-            if (allGroundPiece[i].isColored == false)   // Eðer objelerden [i] sýradaki zeminde isColored false ise(Zemin renkli deðilse)
+            if (allGroundPiece[i].isColored == false)   // Eðer nesnelerde [i] sýradaki zeminde "isColored" false ise(Zemin renkli deðilse) Oyun henüz bitmemiþtir
             {
-                isFinished = false;
+                isFinished = false; // Oyun tamamlanmamýþtýr
                 break;
             }
         }
-        if (isFinished)
+        if (isFinished) // Eðer tüm zeminlere temas edilmiþse
         {
-            NextLevel();
+            NextLevel();    // Bir sonraki levele geç
         }
     }
     private void NextLevel()
@@ -60,7 +61,7 @@ public class gameManager : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);   // Bir sonrali levele geçer
         }        
     }
 }
